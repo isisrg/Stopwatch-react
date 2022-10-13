@@ -1,0 +1,11 @@
+.start-button {
+  background-color: #082a11;
+  border: solid 2px #082a11;
+  color: #2abf50;
+}
+
+.start-button:hover {
+  background-color: #041609;
+  border: solid 2px #041609;
+  color: #2abf50;
+}

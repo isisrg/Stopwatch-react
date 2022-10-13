@@ -1,0 +1,11 @@
+.stop-button {
+  background-color: #320e0b;
+  border: solid 2px #320e0b;
+  color: #e93f35;
+}
+
+.stop-button:hover {
+  background-color: #1b0705;
+  border: solid 2px #1b0705;
+  color: #e93f35;
+}
