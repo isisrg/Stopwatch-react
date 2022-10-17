@@ -6,7 +6,6 @@ table {
 
 tr {
   height: 45px;
-  border-top: solid 2px #151516;
   border-bottom: solid 2px #151516;
   justify-items: center;
 }
@@ -22,6 +21,7 @@ td:nth-child(2) {
   height: 35%;
   width: 93%;
   margin: 0 auto;
+  border-top: solid 2px #151516;
 }
 
 /* ----------------------- */

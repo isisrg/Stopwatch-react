@@ -18,6 +18,8 @@ export function TimerAndButtons(props) {
         setLapNumber={props.setLapNumber}
         lapEntries={props.lapEntries}
         setLapEntries={props.setLapEntries}
+        bestWorstLapInfo={props.bestWorstLapInfo}
+        setBestWorstLapInfo={props.setBestWorstLapInfo}
       />
     </div>
   )

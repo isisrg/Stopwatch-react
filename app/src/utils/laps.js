@@ -1,11 +1,10 @@
 export function updateLapEntries(lapTimer, setLapEntries) {
   setLapEntries((previousLapEntries) => {
-    const lapTime = lapTimer.minutes + ":" + lapTimer.seconds + "." + lapTimer.hundredths
-
     let oldLapEntry = previousLapEntries[previousLapEntries.length - 1]
     const newLapEntry = {
       index: oldLapEntry.index,
-      lapTime,
+      lapTime: lapTimer.displayTime,
+      milliseconds: lapTimer.milliseconds,
     }
 
     const lapEntriesToKeep = [...previousLapEntries]
@@ -17,7 +16,7 @@ export function updateLapEntries(lapTimer, setLapEntries) {
 
 export function registerNewLap(lapNumber, setLapNumber, setLapEntries) {
   setLapEntries((previousLapEntries) => {
-    const newLapEntry = { index: lapNumber, lapTime: "00:00.00" }
+    const newLapEntry = { index: lapNumber, lapTime: "00:00.00", milliseconds: 0 }
     const newLapEntries = [...previousLapEntries, newLapEntry]
     return newLapEntries
   })
@@ -38,63 +37,26 @@ export function registerNewLap(lapNumber, setLapNumber, setLapEntries) {
 //   document.getElementById(`emptyRow${lapNumber}`).remove()
 // }
 
-// export function updateBestWorstLapValues() {
-//   switch (lapNumber) {
-//     case 1:
-//       bestWorstLapInfo.bestLapPosition = bestWorstLapInfo.worstLapPosition = 1
-//       bestWorstLapInfo.bestLapMilliseconds = bestWorstLapInfo.worstLapMilliseconds = lapTimer.milliseconds
-//       break
-//     case 2:
-//       if (lapTimer.milliseconds < bestWorstLapInfo.bestLapMilliseconds) {
-//         bestWorstLapInfo.bestLapPosition = lapNumber
-//         bestWorstLapInfo.bestLapMilliseconds = lapTimer.milliseconds
-//       } else if (lapTimer.milliseconds > bestWorstLapInfo.worstLapMilliseconds) {
-//         bestWorstLapInfo.worstLapPosition = lapNumber
-//         bestWorstLapInfo.worstLapMilliseconds = lapTimer.milliseconds
-//       }
-//     default:
-//       if (lapTimer.milliseconds < bestWorstLapInfo.bestLapMilliseconds) {
-//         bestWorstLapInfo.bestLapPosition = lapNumber
-//         bestWorstLapInfo.bestLapMilliseconds = lapTimer.milliseconds
-//       } else if (lapTimer.milliseconds > bestWorstLapInfo.worstLapMilliseconds) {
-//         bestWorstLapInfo.worstLapPosition = lapNumber
-//         bestWorstLapInfo.worstLapMilliseconds = lapTimer.milliseconds
-//       }
-//   }
-// }
-
-// export function updateLapsStyles(toUpdate) {
-//   switch (toUpdate) {
-//     case "best":
-//       document.getElementById(`lap-${bestWorstLapInfo.bestLapPosition}`).classList.remove("best-lap")
-//       document.getElementById(`lap-${lapNumber}`).classList.add("best-lap")
-//       break
-//     case "worst":
-//       document.getElementById(`lap-${bestWorstLapInfo.worstLapPosition}`).classList.remove("worst-lap")
-//       document.getElementById(`lap-${lapNumber}`).classList.add("worst-lap")
-//       break
-//     case "second":
-//       document.getElementById(`lap-${bestWorstLapInfo.bestLapPosition}`).classList.add("best-lap")
-//       document.getElementById(`lap-${bestWorstLapInfo.worstLapPosition}`).classList.add("worst-lap")
-//   }
-// }
-
-// export function updateBestWorstLap() {
-//   switch (lapNumber) {
-//     case 1:
-//       updateBestWorstLapValues()
-//       break
-//     case 2:
-//       updateBestWorstLapValues()
-//       updateLapsStyles("second")
-
-//     default:
-//       if (lapTimer.milliseconds < bestWorstLapInfo.bestLapMilliseconds) {
-//         updateLapsStyles("best")
-//         updateBestWorstLapValues()
-//       } else if (lapTimer.milliseconds > bestWorstLapInfo.worstLapMilliseconds) {
-//         updateLapsStyles("worst")
-//         updateBestWorstLapValues()
-//       }
-//   }
-// }
+export function updateBestWorstLapValues(previousEntry, bestWorstLapInfo, setBestWorstLapInfo) {
+  switch (previousEntry.index) {
+    case 0:
+      setBestWorstLapInfo({
+        bestLapPosition: previousEntry.index,
+        bestLapMilliseconds: previousEntry.milliseconds,
+        worstLapPosition: previousEntry.index,
+        worstLapMilliseconds: previousEntry.milliseconds,
+      })
+      break
+    default:
+      if (previousEntry.milliseconds < bestWorstLapInfo.bestLapMilliseconds) {
+        setBestWorstLapInfo({ ...bestWorstLapInfo, bestLapPosition: previousEntry.index, bestLapMilliseconds: previousEntry.milliseconds })
+      } else if (previousEntry.milliseconds > bestWorstLapInfo.worstLapMilliseconds) {
+        setBestWorstLapInfo({ ...bestWorstLapInfo, worstLapPosition: previousEntry.index, worstLapMilliseconds: previousEntry.milliseconds })
+      }
+  }
+}
+export function updateLapsStyles(bestWorstLapInfo, lapIndex, lapNumber) {
+  if (lapNumber > 1 && lapIndex === bestWorstLapInfo.bestLapPosition) return "best-lap"
+  if (lapNumber > 1 && lapIndex === bestWorstLapInfo.worstLapPosition) return "worst-lap"
+  else return "lap-entry"
+}

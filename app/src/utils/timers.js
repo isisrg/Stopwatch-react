@@ -1,27 +1,26 @@
 export function updateTimeValues(timer) {
-  let timerMilliseconds = Date.now() - timer.startingTime
-  let startingTime = Date.now()
-  let milliseconds = timer.milliseconds + timerMilliseconds
-  let minutes = Math.floor(milliseconds / 60000)
-  let seconds = Math.floor(milliseconds / 1000) % 60
-  let hundredths = Math.floor((milliseconds % 1000) / 10)
+  const timerMilliseconds = Date.now() - timer.startingTime
+  const startingTime = Date.now()
+  const milliseconds = timer.milliseconds + timerMilliseconds
+  const minutes = Math.floor(milliseconds / 60000)
+  const seconds = Math.floor(milliseconds / 1000) % 60
+  const hundredths = Math.floor((milliseconds % 1000) / 10)
   return { minutes, seconds, hundredths, milliseconds, timerMilliseconds, startingTime }
 }
 
 export function formatTimeValues(timer) {
-  let minutes = timer.minutes.toString().padStart(2, "0")
-  let seconds = timer.seconds.toString().padStart(2, "0")
-  let hundredths = timer.hundredths.toString().padStart(2, "0")
-  return { ...timer, minutes, seconds, hundredths }
+  const minutes = timer.minutes.toString().padStart(2, "0")
+  const seconds = timer.seconds.toString().padStart(2, "0")
+  const hundredths = timer.hundredths.toString().padStart(2, "0")
+  const displayTime = minutes + ":" + seconds + "." + hundredths
+  return { displayTime, milliseconds: timer.milliseconds, timerMilliseconds: timer.timerMilliseconds, startingTime: timer.startingTime }
 }
 
 export function updateAllTimeValues(mainTimer, setMainTimer, setLapTimer) {
   let newTimer = updateTimeValues(mainTimer)
   newTimer = formatTimeValues(newTimer)
   setMainTimer({
-    minutes: newTimer.minutes,
-    seconds: newTimer.seconds,
-    hundredths: newTimer.hundredths,
+    displayTime: newTimer.displayTime,
     milliseconds: newTimer.milliseconds,
     timerMilliseconds: newTimer.milliseconds,
     startingTime: newTimer.startingTime,
@@ -30,11 +29,8 @@ export function updateAllTimeValues(mainTimer, setMainTimer, setLapTimer) {
   setLapTimer((previousLapState) => {
     newTimer = updateTimeValues(previousLapState)
     newTimer = formatTimeValues(newTimer)
-
     return {
-      minutes: newTimer.minutes,
-      seconds: newTimer.seconds,
-      hundredths: newTimer.hundredths,
+      displayTime: newTimer.displayTime,
       milliseconds: newTimer.milliseconds,
       timerMilliseconds: newTimer.timerMilliseconds,
       startingTime: newTimer.startingTime,
