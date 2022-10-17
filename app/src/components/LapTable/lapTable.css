@@ -1,0 +1,40 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  empty-cells: show;
+}
+
+tr {
+  height: 45px;
+  border-bottom: solid 2px #151516;
+  justify-items: center;
+}
+
+td:nth-child(2) {
+  text-align: right;
+}
+
+/* ----------------------- */
+
+#lapContainer {
+  overflow-x: auto;
+  height: 35%;
+  width: 93%;
+  margin: 0 auto;
+  border-top: solid 2px #151516;
+}
+
+/* ----------------------- */
+
+.lap-entry {
+  color: #fffdff;
+  font-size: 16px;
+}
+
+.best-lap {
+  color: #2abf50;
+}
+
+.worst-lap {
+  color: #e93f35;
+}

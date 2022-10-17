@@ -1,0 +1,24 @@
+/* Used on the Lap button when is not beeing pressed when the Start button has not been pressed yet*/
+.unabled-lap-button {
+  background-color: #1c1c1d;
+  border: solid 2px #1c1c1d;
+  color: #77777e;
+}
+
+.unabled-lap-button:hover {
+  background-color: #0f0f0f;
+  border: solid 2px #0f0f0f;
+  color: #77777e;
+}
+
+.lap-reset-button {
+  background-color: #333;
+  border: solid 2px #333;
+  color: #fff;
+}
+
+.lap-reset-button:hover {
+  background-color: #1b1b1b;
+  border: solid 2px #1b1b1b;
+  color: #fff;
+}
