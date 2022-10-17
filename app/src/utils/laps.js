@@ -1,23 +1,28 @@
-// export function updateLapTimer() {
-//   let currentLap = `${lapTimer.minutes}:${lapTimer.seconds}.${lapTimer.hundredths}`
-//   lapTableTimeCell.innerText = `${currentLap}`
-// }
+export function updateLapEntries(lapTimer, setLapEntries) {
+  setLapEntries((previousLapEntries) => {
+    const lapTime = lapTimer.minutes + ":" + lapTimer.seconds + "." + lapTimer.hundredths
 
-export function updateLapTimer() {
-  let currentLap = `${lapTimer.minutes}:${lapTimer.seconds}.${lapTimer.hundredths}`
-  lapTableTimeCell.innerText = `${currentLap}`
+    let oldLapEntry = previousLapEntries[previousLapEntries.length - 1]
+    const newLapEntry = {
+      index: oldLapEntry.index,
+      lapTime,
+    }
+
+    const lapEntriesToKeep = [...previousLapEntries]
+    lapEntriesToKeep.pop()
+    const newLapEntries = [...lapEntriesToKeep, newLapEntry]
+    return newLapEntries
+  })
 }
 
-// export function registerNewLap() {
-//   formatTimeValues(lapTimer)
-//   if (lapNumber <= 6) deleteEmptyLapEntry()
-//   let lapTableRow = $lapTable.insertRow(0)
-//   lapTableRow.id = `lap-${lapNumber}`
-//   let lapTableLapNumberCell = lapTableRow.insertCell(0)
-//   lapTableLapNumberCell.innerText = `Lap ${lapNumber}`
-//   lapTableTimeCell = lapTableRow.insertCell(1)
-//   updateLapTimer()
-// }
+export function registerNewLap(lapNumber, setLapNumber, setLapEntries) {
+  setLapEntries((previousLapEntries) => {
+    const newLapEntry = { index: lapNumber, lapTime: "00:00.00" }
+    const newLapEntries = [...previousLapEntries, newLapEntry]
+    return newLapEntries
+  })
+  setLapNumber((previousLapNumber) => previousLapNumber + 1)
+}
 
 // export function createEmptyLapsEntries() {
 //   lapNumber = 6

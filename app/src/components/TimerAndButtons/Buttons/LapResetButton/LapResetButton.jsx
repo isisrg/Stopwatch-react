@@ -5,30 +5,31 @@
 //       break
 //     case "running":
 //       TODO: updateBestWorstLap()
-//       TODO: ++lapNumber
-//       TODO: lapTimer = { minutes: 0, seconds: 0, hundredths: 0, milliseconds: 0, startingTime: Date.now() }
-//       TODO: registerNewLap()
+//       ++lapNumber
+//       lapTimer = { minutes: 0, seconds: 0, hundredths: 0, milliseconds: 0, startingTime: Date.now() }
+//       registerNewLap()
 //   }
 // }
 
 import { updateButtonsStyles, updateButtonsText } from "../../../../utils/buttons"
 import { initialize } from "../../../../utils/initialize"
+import { registerNewLap } from "../../../../utils/laps"
 import "./lapResetButton.css"
 
 export function LapResetButton(props) {
   function handleLapReset() {
-    // if (props.state == "paused") initialize(props)
     switch (props.state) {
       case "paused":
         initialize(props)
         break
       case "running":
-        console.log("lap")
+        // props.setLapTimer({ minutes: "00", seconds: "00", hundredths: "00", milliseconds: 0, timerMilliseconds: 0, startingTime: Date.now() })
+        registerNewLap(props.lapNumber, props.setLapNumber, props.setLapEntries)
         props.setLapTimer({ minutes: "00", seconds: "00", hundredths: "00", milliseconds: 0, timerMilliseconds: 0, startingTime: Date.now() })
-        console.log(props.lapTimer)
-      // create new lap
+        console.log("LAP: ", props.lapTimer)
     }
   }
+
   return (
     <button id="lapResetButton" className={updateButtonsStyles(props.state, "lap-reset")} onClick={handleLapReset}>
       {updateButtonsText(props.state, "lap-reset")}

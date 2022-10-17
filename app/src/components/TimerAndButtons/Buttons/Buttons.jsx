@@ -12,9 +12,10 @@ export function Buttons(props) {
         setMainTimer={props.setMainTimer}
         lapTimer={props.lapTimer}
         setLapTimer={props.setLapTimer}
-        lapEntries={props.lapEntries}
         lapNumber={props.lapNumber}
         setLapNumber={props.setLapNumber}
+        lapEntries={props.lapEntries}
+        setLapEntries={props.setLapEntries}
       />
       <StartStopButton
         state={props.state}
@@ -23,6 +24,10 @@ export function Buttons(props) {
         setMainTimer={props.setMainTimer}
         lapTimer={props.lapTimer}
         setLapTimer={props.setLapTimer}
+        lapNumber={props.lapNumber}
+        setLapNumber={props.setLapNumber}
+        lapEntries={props.setLapEntries}
+        setLapEntries={props.setLapEntries}
       />
     </div>
   )

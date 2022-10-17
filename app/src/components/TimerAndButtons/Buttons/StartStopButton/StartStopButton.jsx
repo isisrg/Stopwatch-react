@@ -1,25 +1,5 @@
-// $startStopButton.onclick = () => {
-//   switch (state) {
-//     case "onZero":
-//       updateButtonsStyles()
-//       TODO: registerNewLap()
-//       updateState()
-//       initializeTimers()
-//       timerId = requestAnimationFrame(updateAllTimeValues)
-//       break
-//     case "paused":
-//       updateButtonsStyles()
-//       updateState()
-//       timerId = requestAnimationFrame(updateAllTimeValues)
-//       break
-//     case "running":
-//       updateButtonsStyles()
-//       cancelAnimationFrame(timerId)
-//       updateState()
-//   }
-// }
-
 import { updateButtonsStyles, updateButtonsText } from "../../../../utils/buttons"
+import { registerNewLap } from "../../../../utils/laps"
 import { updateState } from "../../../../utils/state"
 import { initializeTimers } from "../../../../utils/timers"
 import "./startButton.css"
@@ -27,12 +7,13 @@ import "./stopButton.css"
 
 export function StartStopButton(props) {
   function handleStartStop() {
-    if (props.state === "onZero") {
-      initializeTimers(props.mainTimer, props.setMainTimer, props.lapTimer, props.setLapTimer)
-    }
-    if (props.state === "paused") {
-      props.setMainTimer({ ...props.mainTimer, startingTime: Date.now() })
-      props.setLapTimer({ ...props.lapTimer, startingTime: Date.now() })
+    switch (props.state) {
+      case "onZero":
+        initializeTimers(props.mainTimer, props.setMainTimer, props.lapTimer, props.setLapTimer)
+        registerNewLap(props.lapNumber, props.setLapNumber, props.lapEntries, props.setLapEntries)
+        break
+      case "paused":
+        initializeTimers(props.mainTimer, props.setMainTimer, props.lapTimer, props.setLapTimer)
     }
     props.setState(updateState(props.state))
   }

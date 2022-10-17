@@ -15,7 +15,7 @@ export function formatTimeValues(timer) {
   return { ...timer, minutes, seconds, hundredths }
 }
 
-export function updateAllTimeValues(mainTimer, setMainTimer, lapTimer, setLapTimer) {
+export function updateAllTimeValues(mainTimer, setMainTimer, setLapTimer) {
   let newTimer = updateTimeValues(mainTimer)
   newTimer = formatTimeValues(newTimer)
   setMainTimer({
@@ -26,17 +26,20 @@ export function updateAllTimeValues(mainTimer, setMainTimer, lapTimer, setLapTim
     timerMilliseconds: newTimer.milliseconds,
     startingTime: newTimer.startingTime,
   })
-  newTimer = updateTimeValues(lapTimer)
-  newTimer = formatTimeValues(newTimer)
-  setLapTimer({
-    minutes: newTimer.minutes,
-    seconds: newTimer.seconds,
-    hundredths: newTimer.hundredths,
-    milliseconds: newTimer.milliseconds,
-    timerMilliseconds: newTimer.timerMilliseconds,
-    startingTime: newTimer.startingTime,
+
+  setLapTimer((previousLapState) => {
+    newTimer = updateTimeValues(previousLapState)
+    newTimer = formatTimeValues(newTimer)
+
+    return {
+      minutes: newTimer.minutes,
+      seconds: newTimer.seconds,
+      hundredths: newTimer.hundredths,
+      milliseconds: newTimer.milliseconds,
+      timerMilliseconds: newTimer.timerMilliseconds,
+      startingTime: newTimer.startingTime,
+    }
   })
-  //   updateLapTimer()
 }
 
 export function initializeTimers(mainTimer, setMainTimer, lapTimer, setLapTimer) {

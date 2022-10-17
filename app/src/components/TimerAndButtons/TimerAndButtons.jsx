@@ -14,9 +14,10 @@ export function TimerAndButtons(props) {
         setMainTimer={props.setMainTimer}
         lapTimer={props.lapTimer}
         setLapTimer={props.setLapTimer}
-        lapEntries={props.lapEntries}
         lapNumber={props.lapNumber}
         setLapNumber={props.setLapNumber}
+        lapEntries={props.lapEntries}
+        setLapEntries={props.setLapEntries}
       />
     </div>
   )
